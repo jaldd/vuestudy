@@ -4,8 +4,8 @@
     <button @click="getData()">获取数据</button>
     <br />
     <i style="font-size:40px" class="el-icon-setting"></i>
-     <el-rate v-model="value1"></el-rate>
-    <br/>
+    <el-rate v-model="value1"></el-rate>
+    <br />
     <ul
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
@@ -84,6 +84,7 @@
 
 <script>
 import storage from "./model/localStorage.js";
+import store from "./vuex/store.js";
 
 export default {
   data() {
@@ -115,6 +116,7 @@ export default {
       body: []
     };
   },
+  store,
   name: "app",
   components: {
     // HelloWorld,
@@ -177,8 +179,13 @@ export default {
             console.log(response.body);
             console.log(response.body);
             this.body = this.body.concat(response.body.result);
+
+            this.$store.commit("addList", this.body);
+            console.log("aaa");
+            console.log(this.$store.state.list);
+            console.log(this.$store.state.list.length);
             ++this.page;
-            if(response.body.result.length==20){
+            if (response.body.result.length == 20) {
               this.loading = false;
             }
           },
@@ -197,7 +204,13 @@ export default {
     if (list) {
       this.list = list;
     }
-    this.getData();
+    var listData = this.$store.state.list;
+    console.log(listData.length);
+    if (listData.length > 0) {
+      this.body = listData;
+    } else {
+      this.getData();
+    }
   }
   // }
 };

@@ -1,11 +1,13 @@
 <template>
   <div id="content">
-    content
+    content -- {{this.$store.state.count}}
     <h2>{{list.title}}</h2>
     <div v-html="list.content"></div>
   </div>
 </template>
 <script>
+import store from "../vuex/store.js";
+
 export default {
   data() {
     return {
@@ -13,6 +15,7 @@ export default {
       list: []
     };
   },
+  store,
   methods: {
     requestData(aid) {
       console.log("aid:");

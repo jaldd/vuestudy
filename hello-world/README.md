@@ -154,7 +154,10 @@ sudo cnpm install  webpack-cli -g
    yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
 2. vue add element
 
+---
+## vux
 
+1. cnpm install vuex --save
 
 
 
