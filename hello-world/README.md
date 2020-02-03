@@ -44,7 +44,8 @@ vue create hello-world
 cd hello-world
 
 vue ui
-
+sudo cnpm install  webpack -g
+sudo cnpm install  webpack-cli -g
 开发运行项目：npm run serve
 
 ---
@@ -136,11 +137,22 @@ vue ui
    1. 父组件和子组件（Helloworld组件和Header组件）
    2. 非父子组件（Helloworld组件和Home组件）
 3. 
+---
+## mintui
 
+1. Main.js中
 
+    ```js
+    import Mint from 'mint-ui';
+    import 'mint-ui/lib/style.css';
+    Vue.use(Mint);
+    ```
+---
+## element-ui
 
-
-
+1. yarn config set registry https://registry.npm.taobao.org -g
+   yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
+2. vue add element
 
 
 

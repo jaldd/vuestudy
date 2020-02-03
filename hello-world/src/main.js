@@ -2,32 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import VueResource from 'vue-resource'
-import VueRouter from 'vue-router'
 
 Vue.use(VueResource)
-Vue.use(VueRouter)
 
 //创建组件
-import HelloWorld from "./components/HelloWorld.vue";
-import Home from "./components/Home.vue";
-import Content from "./components/Content.vue";
+import Mint from 'mint-ui';
+import 'mint-ui/lib/style.css';
+import './plugins/element.js'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import router from './router/router.js';
 
-
-//配置路由
-const routes = [
-  { path: "/home", component: Home },
-  { path: "/helloworld", component: HelloWorld },
-  { path: "/content", component: Content },
-  { path: "/content/:aid", component: Content },
-  { path: "*", redirect: "/home" }
-]
-
-//实例化vue
-const router = new VueRouter({
-  routes //相当于routes:routes
-})
-
-// export default router
+Vue.use(ElementUI);
+Vue.use(Mint);
 
 
 Vue.config.productionTip = false

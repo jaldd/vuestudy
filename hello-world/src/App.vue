@@ -3,9 +3,17 @@
     <br />
     <button @click="getData()">获取数据</button>
     <br />
-    <ul>
+    <i style="font-size:40px" class="el-icon-setting"></i>
+     <el-rate v-model="value1"></el-rate>
+    <br/>
+    <ul
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10"
+      class="list"
+    >
       <li v-for="(item,key) in body" :key="key">
-        <router-link to="/content">{{item}}</router-link>
+        <router-link :to="'/content/'+item.aid">{{item.title}}</router-link>
       </li>
     </ul>
     <br />
@@ -13,6 +21,8 @@
     <button @click="doAdd">+add</button>
     <br />
     <button @click="getList">get list</button>
+    <br />
+    <button @click="goContent">go content</button>
     <br />
     <h2>进行中</h2>
     <ul>
@@ -66,6 +76,7 @@
     <!-- <Home/> -->
     <router-link to="/home">home</router-link>
     <router-link to="/helloworld">hello world</router-link>
+    <router-link to="/user">用户</router-link>
     <hr />
     <router-view v-if="ok" :msg="msg"></router-view>
   </div>
@@ -80,9 +91,12 @@ export default {
       ok: true,
       msg: "hello ",
       todo: "",
+      value1: null,
       obj: {
         name: "ldd"
       },
+      page: 1,
+      loading: false,
       list: [
         {
           title: "111",
@@ -107,11 +121,17 @@ export default {
     // Home
   },
   methods: {
+    loadMore() {
+      this.getData();
+    },
     getMsg() {
       alert(this.msg);
     },
     setMsg() {
       this.msg = "changed";
+    },
+    goContent() {
+      this.$router.push({ path: "/content/2", params: {} });
     },
     getInputValue() {
       this.$refs.box.style.background = "red";
@@ -144,21 +164,29 @@ export default {
     },
     getData() {
       // GET /someUrl
-      /*this.$http
-        .get("http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20")
+      this.loading = true;
+      this.$http
+        .jsonp(
+          "http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=" +
+            this.page
+        )
         .then(
           response => {
             // get body data
             console.log(response);
             console.log(response.body);
             console.log(response.body);
-            this.body = response.body.result;
+            this.body = this.body.concat(response.body.result);
+            ++this.page;
+            if(response.body.result.length==20){
+              this.loading = false;
+            }
           },
           response => {
             // error callback
             console.log(response);
           }
-        );*/
+        );
     }
   },
   // mounted: {
